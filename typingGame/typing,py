@@ -1,0 +1,116 @@
+import time
+import random
+
+trabalenguas_espanol = (
+    "Tres tristes tigres tragaban trigo en un trigal. En tres tristes trastos, tragaban trigo tres tristes tigres.",
+    "Pablito clavo un clavito en la calva de un calvito. Que clavito clavo Pablito, un clavito chiquitito.",
+    "Si Pancha plancha con cuatro planchas, con cuantas planchas plancha Pancha. Dimelo ya.",
+    "El arzobispo de Constantinopla se quiere desarzobispoconstantinopolizar. El que lo desarzobispoconstantinopolizara, un buen desarzobispoconstantinopolizador sera.",
+    "Compre pocas copas, pocas copas compre. Y como compre pocas copas, pocas copas pagare."
+)
+
+trabalenguas_ingles = (
+    "Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked! If Peter Piper picked a peck of pickled peppers, where's the peck of pickled peppers Peter Piper picked?",
+    "How much wood would a woodchuck chuck, if a woodchuck could chuck wood? He would chuck, he would, as much as he could, and chuck as much wood as a woodchuck would!",
+    "The sixth sick sheik's sixth sheep's sick. Is it the sixth sick sheik's sixth sheep's sick, or the seventh?",
+    "Betty Botter bought some butter, but she said, 'The butter's bitter! If I put it in my batter, it will make my batter bitter.' So, she bought a bit of better butter!",
+    "Through three cheese trees three free fleas flew. While these fleas flew, freezy breeze blew. Freezy breeze made these three trees freeze... That's what made these three free fleas sneeze!"
+)
+
+
+def calcular_resultados(tiempo_inicio, totales, correctos):
+    tiempo_final = time.time()
+    tiempo_transcurrido = tiempo_final - tiempo_inicio
+    minutos_transcurridos = max(tiempo_transcurrido / 60, 1e-6)
+
+    if totales == 0:
+        print("\nNo escribiste nada. ¡Inténtalo de nuevo!")
+        return None
+
+    precision = (correctos / totales) * 100
+    palabras_correctas = correctos / 5
+    wpm = palabras_correctas / minutos_transcurridos
+
+    print("\n" + "=" * 50)
+    print(" ¡TIEMPO TERMINADO! Aquí están tus estadísticas:")
+    print("=" * 50)
+    print(f"  Tiempo total: {tiempo_transcurrido:.2f} segundos")
+    print(f" Precisión:    {precision:.2f}%")
+    print(f" Aciertos:     {correctos} de {totales} caracteres")
+    print(f" Velocidad:   {wpm:.2f} WPM (Palabras por minuto)")
+    print("=" * 50)
+    return wpm
+
+
+def juego_mecanografia():
+    print("=" * 50)
+    print(" BIENVENIDO AL RETO DE MECANOGRAFÍA / TYPING GAME ")
+    print("=" * 50)
+    print("Reglas:")
+    print("1. Escribe el texto EXACTAMENTE como aparece (incluye mayúsculas, tildes y signos).")
+    print("2. Tienes aproximadamente 60 segundos.")
+    print("3. Presiona ENTER para enviar cada frase.")
+    print("4. Escribe 'q' y presiona ENTER para salir en cualquier momento.\n")
+
+    best_wpm = 0
+
+    while True:
+        idioma = input("Elige el idioma / Choose your language (ES / EN): ").strip().upper()
+
+        if idioma == "EN":
+            lista_activa = trabalenguas_ingles
+        else:
+            lista_activa = trabalenguas_espanol
+
+        input("Presiona ENTER cuando estés listo para arrancar el cronómetro...")
+
+        tiempo_limite = 60
+        inicio = time.time()
+        fin_estimado = inicio + tiempo_limite
+
+        caracteres_totales = 0
+        caracteres_correctos = 0
+
+        while time.time() < fin_estimado:
+            frase_actual = random.choice(lista_activa)
+
+            print("\n" + "-" * 30)
+            print(f"TIEMPO RESTANTE APROX: {int(fin_estimado - time.time())}s")
+            print("Escribe esto:")
+            print(f"\n {frase_actual}\n")
+
+            texto_usuario = input("Tu turno (q para salir): ").strip()
+            if texto_usuario.lower() == "q":
+                print("Has salido del juego. Calculando resultados intermedios...")
+                break
+
+            longitud_minima = min(len(frase_actual), len(texto_usuario))
+            for i in range(longitud_minima):
+                if frase_actual[i] == texto_usuario[i]:
+                    caracteres_correctos += 1
+
+            caracteres_totales += len(frase_actual)
+            if caracteres_totales > 0:
+                precision_parcial = (caracteres_correctos / caracteres_totales) * 100
+            else:
+                precision_parcial = 0
+
+            print(f"Aciertos parciales: {caracteres_correctos} / {caracteres_totales} ({precision_parcial:.2f}%)")
+
+        wpm = calcular_resultados(inicio, caracteres_totales, caracteres_correctos)
+
+        if wpm is not None:
+            if wpm > best_wpm:
+                best_wpm = wpm
+                print(f" ¡Nuevo récord! Mejor WPM: {best_wpm:.2f}")
+            else:
+                print(f" Mejor WPM hasta ahora: {best_wpm:.2f}")
+
+        seguir = input("\n¿Quieres jugar otra vez? (s/n): ").strip().lower()
+        if seguir not in ["s", "si", "y", "yes"]:
+            print("Gracias por jugar. ¡Hasta la próxima!")
+            break
+
+
+if __name__ == "__main__":
+    juego_mecanografia()
