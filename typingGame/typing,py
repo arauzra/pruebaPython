@@ -2,11 +2,11 @@ import time
 import random
 
 trabalenguas_espanol = (
-    "Tres tristes tigres tragaban trigo en un trigal. En tres tristes trastos, tragaban trigo tres tristes tigres.",
-    "Pablito clavo un clavito en la calva de un calvito. Que clavito clavo Pablito, un clavito chiquitito.",
-    "Si Pancha plancha con cuatro planchas, con cuantas planchas plancha Pancha. Dimelo ya.",
+    "Tres tristes tigres tragaban trigo en un trigal En tres tristes trastos, tragaban trigo tres tristes tigres.",
+    "Pablito clavo un clavito en la calva de un calvito Que clavito clavo Pablito, un clavito chiquitito.",
+    "Si Pancha plancha con cuatro planchas con cuantas planchas plancha Pancha. Dimelo ya.",
     "El arzobispo de Constantinopla se quiere desarzobispoconstantinopolizar. El que lo desarzobispoconstantinopolizara, un buen desarzobispoconstantinopolizador sera.",
-    "Compre pocas copas, pocas copas compre. Y como compre pocas copas, pocas copas pagare."
+    "Compre pocas copas pocas copas compre Y como compre pocas copas, pocas copas pagare."
 )
 
 trabalenguas_ingles = (
